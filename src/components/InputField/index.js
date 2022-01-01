@@ -83,18 +83,3 @@ export default function InputField({ question, type, description, defaultAnswer,
 InputField.propTypes = propTypes;
 
 InputField.defaultProps = defaultProps;
-
-/*
-(type === inputType.number) ? (
-            <div className='input-group'>
-                <label>{question}</label>
-                <span className='description'>{description}</span>
-                <input type='text'
-                    defaultValue={defaultAnswer}
-                    onBlur={(event) => handleError(type, event)} />
-                {
-                    (error && <span className='error'><i className='fas fa-exclamation-triangle'></i>{error}</span>)
-                }
-            </div>
-        ) : 
-*/

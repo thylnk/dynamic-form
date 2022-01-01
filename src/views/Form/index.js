@@ -8,7 +8,6 @@ const FormPage = () => {
 
     const [step, setStep] = useState(1);
     const [error, setError] = useState('a');
-    // const [isLoaded, setIsLoaded] = useState(false);
     const [title, setTilte] = useState('');
     const [description, setDescription] = useState(null);
     const [sections, setSections] = useState([]);
@@ -17,15 +16,11 @@ const FormPage = () => {
         const fetchData = async () => {
             try {
                 const response = await formApi.getAll();
-                // setIsLoaded(true);
                 setTilte(response.title);
                 setDescription(response.description);
                 setSections(response.sections);
-                // console.log(sections);
             } catch (error) {
-                // setIsLoaded(true);
                 // setError(error);
-                console.log(error);
             }
         }
         fetchData();
@@ -48,7 +43,7 @@ const FormPage = () => {
     }
 
     const handleSubmit = () => {
-        if (error) {
+        if (!error) {
             alert('Submit form nè!')
         }
         else {
@@ -92,10 +87,6 @@ const FormPage = () => {
                     </div>
                 </div>
                 <div className='right-col'>
-                    {/* 
-                        sections:
-                        title, descript, questions 
-                    */}
 
                     {
                         (sections && sections.map((item, index) => {
@@ -111,59 +102,6 @@ const FormPage = () => {
                             }
                         }))
                     }
-
-                    {/* <div className='form-content'>
-                        <h2>Khảo sát sơ bộ</h2>
-                        <div className='input-group'>
-                            <label htmlFor="name">Bạn tên gì?</label>
-                            <input type="text" name="name" />
-                        </div>
-                        <div className='input-group'>
-                            <label htmlFor="name">Bạn tên gì?</label>
-                            <input type="text" name="name" />
-                        </div>
-                        <div className='input-group'>
-                            <label htmlFor="name">Bạn tên gì?</label>
-                            <input type="text" name="name" />
-                            <span className='error'><i className='fas fa-exclamation-triangle'></i>Ở đây phải nhập số</span>
-                        </div>
-                        <div className='input-group'>
-                            <label htmlFor="generation">Các bạn đã tham gia GDSC được bao lâu rồi?
-                            </label>
-                            <span className='description'>Thời gian các bạn tham gia GDSC, tính theo thế hệ (generation)
-                            </span>
-                            <div className='input-group'>
-                                <input type="radio" id="huey" name="drone" value="huey" />
-                                <label htmlFor="huey">Huey</label>
-                            </div>
-                            <div className='input-group'>
-                                <input type="radio" id="huey" name="drone" value="huey" />
-                                <label htmlFor="huey">Huey</label>
-                            </div>
-                            <div className='input-group'>
-                                <input type="radio" id="huey" name="drone" value="huey" />
-                                <label htmlFor="huey">Huey</label>
-                            </div>
-                        </div>
-                        <div className='input-group'>
-                            <label htmlFor="generation">Các bạn đã tham gia GDSC được bao lâu rồi?
-                            </label>
-                            <span className='description'>Thời gian các bạn tham gia GDSC, tính theo thế hệ (generation)
-                            </span>
-                            <div className='input-group'>
-                                <input type="radio" id="huey" name="drone" value="huey" />
-                                <label htmlFor="huey">Huey</label>
-                            </div>
-                            <div className='input-group'>
-                                <input type="radio" id="huey" name="drone" value="huey" />
-                                <label htmlFor="huey">Huey</label>
-                            </div>
-                            <div className='input-group'>
-                                <input type="radio" id="huey" name="drone" value="huey" />
-                                <label htmlFor="huey">Huey</label>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </form >

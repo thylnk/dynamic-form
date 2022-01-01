@@ -4,6 +4,10 @@ import Radio from '../../components/Radio';
 
 export default function FormDetail({ title, description, questions }) {
 
+    const handleChange = (event) => {
+        console.log(event);
+    }
+
     return (
 
         <div className='form-content'>
@@ -18,7 +22,8 @@ export default function FormDetail({ title, description, questions }) {
                             description={item.description}
                             defaultAnswer={item.defaultAnswer}
                             required={item.required}
-                            options={item.options} />
+                            options={item.options}
+                            onChange={handleChange} />
                     }
                     else {
                         return (

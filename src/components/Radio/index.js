@@ -11,6 +11,7 @@ const propTypes = {
     defaultAnswer: PropTypes.number,
     required: PropTypes.bool,
     opitons: PropTypes.array,
+    onChange: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -22,8 +23,10 @@ const defaultProps = {
     opitons: [],
 }
 
-export default function Radio({ question, type, description, defaultAnswer, required, options }) {
+export default function Radio({ question, type, description, defaultAnswer, required, options, onChange }) {
 
+    // neu truong defaultAnswer la null thi -> ''
+    defaultAnswer = (defaultAnswer === null) ? '' : defaultAnswer;
 
     const [error, setError] = useState(null);
 
@@ -36,18 +39,20 @@ export default function Radio({ question, type, description, defaultAnswer, requ
             <label htmlFor="generation">{question}</label>
             <span className='description'>{description}</span>
             <div className='border-left'>
-                {
+                <div className='input-group' >
+                    {
 
-                    (options && options.map((item, index) => {
-                        return (
-                            <div className='input-group' key={index}>
-                                <input type='radio' name={question} value={item.value}
-                                    checked={defaultAnswer === item.value} />
-                                <label>{item.text}</label>
-                            </div>
-                        )
-                    }))
-                }
+                        (options && options.map((item, index) => {
+                            return (
+                                <div key={index}>
+                                    <input type='radio' name={question} value={item.value}
+                                        defaultChecked={defaultAnswer === item.value} />
+                                    <label>{item.text}</label>
+                                </div>
+                            )
+                        }))
+                    }
+                </div>
             </div>
         </div>
     )

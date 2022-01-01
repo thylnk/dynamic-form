@@ -15,7 +15,6 @@ const defaultProps = {
     handleClick: PropTypes.func.isRequired,
 }
 
-
 export default function Button({ type, styleClass, value, handleBtn }) {
 
     const handleClick = (event) => {

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { validation } from '../../utils/Enum/validation';
+import { inputType } from '../../utils/Enum/inputType';
 
 const propTypes = {
     question: PropTypes.string,
@@ -8,6 +10,7 @@ const propTypes = {
     defaultAnswer: PropTypes.number,
     required: PropTypes.bool,
     opitons: PropTypes.array,
+    setError: PropTypes.func,
 }
 
 const defaultProps = {
@@ -17,12 +20,25 @@ const defaultProps = {
     defaultAnswer: 1,
     required: false,
     opitons: [],
+    setError: () => { },
 }
 
-export default function Radio({ question, type, description, defaultAnswer, required, options }) {
+export default function Radio({ question, type, description, defaultAnswer, required, options, setError }) {
 
     // neu truong defaultAnswer la null thi -> ''
     defaultAnswer = (defaultAnswer === null) ? '' : defaultAnswer;
+
+    const [errorInput, setErrorInput] = useState(null);
+
+    const handleError = (event) => {
+        let error = null;
+        const value = event.target.value;
+        if (required) {
+            error = validation.required(value);
+            setErrorInput(error);
+            setError((error) ? true : false);
+        }
+    }
 
     return (
         <div className='input-group'>
@@ -30,13 +46,14 @@ export default function Radio({ question, type, description, defaultAnswer, requ
             <span className='description'>{description}</span>
             <div className='border-left'>
                 <div className='input-group' >
+                    {(errorInput && <span className='error'><i className='fas fa-exclamation-triangle'></i>{errorInput}</span>)}
                     {
 
                         (options && options.map((item, index) => {
                             return (
                                 <div key={index}>
                                     <input type='radio' name={question} value={item.value}
-                                        defaultChecked={defaultAnswer === item.value} />
+                                        defaultChecked={defaultAnswer === item.value} onChange={handleError} />
                                     <label>{item.text}</label>
                                 </div>
                             )

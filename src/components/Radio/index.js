@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { validateNumbers } from '../../utils/Validation/validateNumber';
-import { validateLength } from '../../utils/Validation/validateLength';
-import { validateRequired } from '../../utils/Validation/validateRequired';
 
 const propTypes = {
     question: PropTypes.string,
@@ -11,7 +8,6 @@ const propTypes = {
     defaultAnswer: PropTypes.number,
     required: PropTypes.bool,
     opitons: PropTypes.array,
-    onChange: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -23,16 +19,10 @@ const defaultProps = {
     opitons: [],
 }
 
-export default function Radio({ question, type, description, defaultAnswer, required, options, onChange }) {
+export default function Radio({ question, type, description, defaultAnswer, required, options }) {
 
     // neu truong defaultAnswer la null thi -> ''
     defaultAnswer = (defaultAnswer === null) ? '' : defaultAnswer;
-
-    const [error, setError] = useState(null);
-
-    const handleError = (type, event) => {
-
-    }
 
     return (
         <div className='input-group'>

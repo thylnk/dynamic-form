@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { validateNumbers } from '../../utils/Validation/validateNumber';
-import { validateLength } from '../../utils/Validation/validateLength';
-import { validateRequired } from '../../utils/Validation/validateRequired';
+import { inputType } from '../../utils/Enum/inputType';
+import { validation } from '../../utils/Enum/validation';
 
 const propTypes = {
     question: PropTypes.string,
@@ -11,6 +10,7 @@ const propTypes = {
     defaultAnswer: PropTypes.string,
     required: PropTypes.bool,
     attrs: PropTypes.object,
+    setError: PropTypes.func,
 }
 
 const defaultProps = {
@@ -20,36 +20,30 @@ const defaultProps = {
     defaultAnswer: '',
     required: false,
     attrs: {},
+    setError: () => { },
 }
 
-const inputType = Object.freeze({
-    'text': 'SHORT_TEXT',
-    'number': 'NUMBER',
-    'textarea': 'LONG_TEXT',
-    'radio': 'RADIO',
-})
+export default function InputField({ question, type, description, defaultAnswer, required, attrs, setError }) {
 
-export default function InputField({ question, type, description, defaultAnswer, required, attrs }) {
+    const [errorInput, setErrorInput] = useState(null);
 
     // neu truong defaultAnswer la null thi -> ''
     defaultAnswer = (defaultAnswer === null) ? '' : defaultAnswer;
 
-    const [error, setError] = useState(null);
-
-    const handleError = (type, event) => {
+    const handleError = (event) => {
+        let error = null;
+        const value = event.target.value;
         if (required) {
-            let value = event.target.value;
-
-            let err = validateRequired(value);
-
-            if (err === null) {
-                err = validateLength(value, attrs, type);
-                if (type === inputType.number) {
-                    err = validateNumbers(value);
-                }
+            error = validation.required(value);
+            setErrorInput(error);
+            // null thi ktra tiep do dai cua value co thoa khong
+            if (!error) {
+                error = (type === inputType.number) ? validation.number(value, attrs) : validation.text(value, attrs);
+                // setErrorInput
+                setErrorInput(error);
             }
-
-            setError(err);
+            // setError de submitForm hay khong
+            setError((error) ? true : false);
         }
     }
 
@@ -60,9 +54,9 @@ export default function InputField({ question, type, description, defaultAnswer,
             <div className='input-group'>
                 <label>{question}</label >
                 <span className='description'>{description}</span>
-                <textarea className='border-left' onBlur={handleError} defaultValue={defaultAnswer} />
+                <textarea className='border-left' onBlur={(event) => handleError(event)} defaultValue={defaultAnswer} />
                 {
-                    (error && <span className='error'><i className='fas fa-exclamation-triangle'></i>{error}</span>)
+                    (errorInput && <span className='error'><i className='fas fa-exclamation-triangle'></i>{errorInput}</span>)
                 }
             </div >
         ) : (
@@ -71,9 +65,9 @@ export default function InputField({ question, type, description, defaultAnswer,
             <div className='input-group'>
                 <label>{question}</label>
                 <span className='description'>{description}</span>
-                <input className='border-left' type='text' onBlur={(event) => handleError(type, event)} defaultValue={defaultAnswer} />
+                <input className='border-left' type='text' onBlur={(event) => handleError(event)} defaultValue={defaultAnswer} />
                 {
-                    (error && <span className='error'><i className='fas fa-exclamation-triangle'></i>{error}</span>)
+                    (errorInput && <span className='error'><i className='fas fa-exclamation-triangle'></i>{errorInput}</span>)
                 }
             </div>
         ))

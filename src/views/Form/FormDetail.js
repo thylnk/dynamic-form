@@ -1,29 +1,40 @@
 import React from 'react';
 import InputField from '../../components/InputField';
 import Radio from '../../components/Radio';
+import PropTypes from 'prop-types';
+import { inputType } from '../../utils/Enum/inputType';
 
-export default function FormDetail({ title, description, questions }) {
+const propTypes = {
+    title: PropTypes.string,
+    questions: PropTypes.array,
+    description: PropTypes.string,
+    setError: PropTypes.func,
+}
 
-    const handleChange = (event) => {
-        console.log(event);
-    }
+const defaultProps = {
+    title: '',
+    questions: [],
+    description: '',
+    setError: () => { },
+}
+
+export default function FormDetail({ title, description, questions, setError }) {
 
     return (
-
         <div className='form-content'>
             <h2>{title}</h2>
             <span className='description description-main'>{description}</span>
             {
                 (questions && questions.map((item, index) => {
-                    if (item.type === "RADIO") {
+                    if (item.type === inputType.radio) {
                         return < Radio key={index}
                             question={item.question}
-                            type='radio'
+                            type={item.type}
                             description={item.description}
                             defaultAnswer={item.defaultAnswer}
                             required={item.required}
                             options={item.options}
-                            onChange={handleChange} />
+                            setError={setError} />
                     }
                     else {
                         return (
@@ -35,6 +46,7 @@ export default function FormDetail({ title, description, questions }) {
                                 defaultAnswer={item.defaultAnswer}
                                 required={item.required}
                                 attrs={item.attrs}
+                                setError={setError}
                             />
                         )
                     }
@@ -43,3 +55,7 @@ export default function FormDetail({ title, description, questions }) {
         </div>
     )
 }
+
+FormDetail.propTypes = propTypes;
+
+FormDetail.defaultProps = defaultProps;

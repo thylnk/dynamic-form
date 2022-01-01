@@ -115,7 +115,7 @@ button:hover {
 
 /* Scrollbar */
 .form-content::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
   border-radius: 20px;
 }
 
@@ -148,7 +148,6 @@ button:hover {
 /* border-left cho cac truong input */
 .border-left {
   margin-top: 10px;
-  padding: 4px 0 2px 0;
   border: none;
   border-left: 5px solid #ff5252;
 }
@@ -167,13 +166,14 @@ textarea:focus {
 }
 
 textarea {
-  height: 130px;
+  height: 150px;
+  resize: none;
 }
 
 input[type="text"],
 input[type="number"],
 textarea {
-  padding: 10px 10px;
+  padding: 10px;
 }
 
 input[type="text"]:focus,
@@ -183,8 +183,7 @@ textarea:focus {
 }
 
 input[type="radio"] {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 10px 15px;
   transform: scale(1.2);
 }
 

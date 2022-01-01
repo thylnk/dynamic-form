@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { validation } from '../../utils/Enum/validation';
-import { inputType } from '../../utils/Enum/inputType';
 
 const propTypes = {
     question: PropTypes.string,
@@ -53,7 +52,9 @@ export default function Radio({ question, type, description, defaultAnswer, requ
                             return (
                                 <div key={index}>
                                     <input type='radio' name={question} value={item.value}
-                                        defaultChecked={defaultAnswer === item.value} onChange={handleError} />
+                                        defaultChecked={defaultAnswer === item.value}
+                                        onBlur={(event) => handleError(event)}
+                                    />
                                     <label>{item.text}</label>
                                 </div>
                             )

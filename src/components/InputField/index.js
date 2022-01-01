@@ -25,10 +25,10 @@ const defaultProps = {
 
 export default function InputField({ question, type, description, defaultAnswer, required, attrs, setError }) {
 
+    const [errorInput, setErrorInput] = useState(null);
+
     // neu truong defaultAnswer la null thi -> ''
     defaultAnswer = (defaultAnswer === null) ? '' : defaultAnswer;
-
-    const [errorInput, setErrorInput] = useState(null);
 
     const handleError = (event) => {
         let error = null;

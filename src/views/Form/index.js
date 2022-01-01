@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 const FormPage = () => {
 
     const [step, setStep] = useState(1);
-    const [error, setError] = useState(false); // true -> loi
+    const [error, setError] = useState(true); // true -> loi
     const [title, setTilte] = useState('');
     const [description, setDescription] = useState(null);
     const [sections, setSections] = useState([]);
@@ -30,14 +30,16 @@ const FormPage = () => {
     const nextStep = () => {
         let currentStep = step;
         if (error || currentStep === sections.length) {
+            alert('Bạn chưa điền đủ thông tin!')
             return;
         }
         setStep(currentStep + 1);
+        setError(true);
     }
 
     const prevStep = () => {
         let currentStep = step;
-        if (!error && currentStep > 1) {
+        if (currentStep > 1) {
             setStep(currentStep - 1);
         }
     }
@@ -47,7 +49,7 @@ const FormPage = () => {
             alert('Submit form nè!')
         }
         else {
-            alert('Chưa điền đủ thông tin!')
+            alert('Bạn chưa điền đủ thông tin!')
         }
     }
 
